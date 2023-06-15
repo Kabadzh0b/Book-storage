@@ -1,17 +1,35 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./BookModal.css";
 import {Book} from "../../types/Book";
 
-const BookModal = ({active, setActive, bookList, setBookList}: {
+const BookModal = ({active, setActive, bookList, setBookList, editBook = null, setEditBook}: {
     active: boolean,
     setActive: (status: boolean) => void,
     bookList: Book[],
-    setBookList: (bookList: Book[]) => void
+    setBookList: (bookList: Book[]) => void,
+    editBook: Book | null,
+    setEditBook: (book: Book | null) => void
 }) => {
     const [bookTitle, setBookTitle] = useState("");
     const [authorName, setAuthorName] = useState("");
     const [category, setCategory] = useState("");
     const [ISBN, setISBN] = useState("");
+
+    const clearAll = ()=>{
+        setBookTitle("");
+        setAuthorName("");
+        setCategory("");
+        setISBN("");
+    }
+
+    useEffect(() => {
+        if (editBook) {
+            setBookTitle(editBook.bookTitle);
+            setAuthorName(editBook.authorName);
+            setCategory(editBook.category);
+            setISBN(String(editBook.ISBN));
+        }
+    }, [editBook]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -23,7 +41,7 @@ const BookModal = ({active, setActive, bookList, setBookList}: {
 
         } else if (ISBN === "") {
 
-        } else {
+        } else if (!editBook) {
             const newBook: Book = {
                 bookTitle,
                 authorName,
@@ -34,12 +52,31 @@ const BookModal = ({active, setActive, bookList, setBookList}: {
             newBookList.push(newBook);
             setBookList(newBookList);
             setActive(false);
+        } else {
+            const newBook: Book = {
+                bookTitle,
+                authorName,
+                category,
+                ISBN: parseInt(ISBN),
+            };
+            const newBookList = [...bookList];
+            setBookList(newBookList.map((book) => {
+                if (book.ISBN === editBook.ISBN) return newBook;
+                return book;
+            }))
+            setEditBook(null);
+            clearAll();
+            setActive(false);
         }
     };
 
 
     return (
-        <div className={active ? "modal active" : "modal"} onClick={() => setActive(false)}>
+        <div className={active ? "modal active" : "modal"} onClick={() => {
+            setEditBook(null);
+            clearAll();
+            setActive(false);
+        }}>
             <div className="modal__content" onClick={e => e.stopPropagation()}>
                 <h2>Add a book</h2>
                 <form onSubmit={handleSubmit}>

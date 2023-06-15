@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     background-color: #f5f5f5;
-    padding: 16px;
     margin-left: 10px;
     margin-top: 10px;
     border-radius: 4px;
@@ -11,6 +10,7 @@
     box-sizing: border-box;
     align-items: center;
     border: 2px solid gray;
+    padding-bottom: 5px;
 }
 
 .book-item-title {
@@ -46,4 +46,24 @@
     .book-item-container {
         width: 320px;
     }
+}
+
+.delete-btn{
+    width: 200px;
+    height: 40px;
+    font-family: "Avignon Pro", monospace;
+    font-size: 20px;
+    background-color: rgb(243, 58, 58);
+    border-radius: 25px;
+    color: whitesmoke;
+}
+
+.edit-btn{
+    width: 100px;
+    height: 40px;
+    font-family: "Avignon Pro", monospace;
+    font-size: 20px;
+    background-color: rgb(0, 42, 255);
+    border-radius: 25px;
+    color: #eefa01;
 }

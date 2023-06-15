@@ -21,17 +21,18 @@ function App() {
 
     const [modalActive, setModalActive] = useState(false);
     const [bookList, setBookList] = useState(BaseBookList);
+    const [editBook, setEditBook] = useState<Book|null>(null);
 
-    const deleteBook = (ISBN: number) => {
+    const deleteBook = (ISBN: number):void => {
         setBookList(bookList.filter(book => book.ISBN !== ISBN));
     }
 
     return (
         <div className="App">
             <button onClick={() => setModalActive(true)}>Add a book</button>
-            <BookList bookList={bookList} deleteBook={deleteBook}></BookList>
+            <BookList bookList={bookList} deleteBook={deleteBook} setModalActive={setModalActive} setEditBook={setEditBook}></BookList>
             <BookModal active={modalActive} setActive={setModalActive} bookList={bookList}
-                       setBookList={setBookList}></BookModal>
+                       setBookList={setBookList} editBook={editBook} setEditBook={setEditBook}></BookModal>
         </div>
     );
 }

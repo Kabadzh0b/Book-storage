@@ -2,7 +2,12 @@ import React, {useState} from "react";
 import "./BookModal.css";
 import {Book} from "../../types/Book";
 
-const BookModal = ({active,setActive}: {active:boolean, setActive:(status:boolean)=>void})=>{
+const BookModal = ({active, setActive, bookList, setBookList}: {
+    active: boolean,
+    setActive: (status: boolean) => void,
+    bookList: Book[],
+    setBookList: (bookList: Book[]) => void
+}) => {
     const [bookTitle, setBookTitle] = useState("");
     const [authorName, setAuthorName] = useState("");
     const [category, setCategory] = useState("");
@@ -10,33 +15,31 @@ const BookModal = ({active,setActive}: {active:boolean, setActive:(status:boolea
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if(bookTitle.trim() === ""){
+        if (bookTitle.trim() === "") {
 
-        }
-        else if(authorName.trim() === "" || !isNaN(Number(authorName))){
+        } else if (authorName.trim() === "" || !isNaN(Number(authorName))) {
 
-        }
-        else if(category === ""){
+        } else if (category === "") {
 
-        }
-        else if(ISBN === ""){
+        } else if (ISBN === "") {
 
-        }
-        else{
+        } else {
             const newBook: Book = {
                 bookTitle,
                 authorName,
                 category,
                 ISBN: parseInt(ISBN),
             };
-            console.log(newBook);
+            const newBookList = [...bookList];
+            newBookList.push(newBook);
+            setBookList(newBookList);
             setActive(false);
         }
     };
 
 
-    return(
-        <div className={active ? "modal active" : "modal"} onClick={()=>setActive(false)}>
+    return (
+        <div className={active ? "modal active" : "modal"} onClick={() => setActive(false)}>
             <div className="modal__content" onClick={e => e.stopPropagation()}>
                 <h2>Add a book</h2>
                 <form onSubmit={handleSubmit}>
@@ -82,7 +85,7 @@ const BookModal = ({active,setActive}: {active:boolean, setActive:(status:boolea
                     </div>
                     <div className="modal-actions">
                         <button type="submit">Add</button>
-                        <button type="button" onClick={()=>setActive(false)}>
+                        <button type="button" onClick={() => setActive(false)}>
                             Cancel
                         </button>
                     </div>

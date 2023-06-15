@@ -15,11 +15,26 @@ const BookModal = ({active, setActive, bookList, setBookList, editBook = null, s
     const [category, setCategory] = useState("");
     const [ISBN, setISBN] = useState("");
 
-    const clearAll = ()=>{
+    const [bookTitleCorrect, setBookTitleCorrect] = useState(true);
+    const [authorNameCorrect, setAuthorNameCorrect] = useState(true);
+    const [categoryCorrect, setCategoryCorrect] = useState(true);
+    const [ISBNCorrect, setISBNCorrect] = useState(true);
+
+    const ISBNs: number[] = [];
+
+    for (let book of bookList) {
+        ISBNs.push(book.ISBN);
+    }
+
+    const clearAll = () => {
         setBookTitle("");
         setAuthorName("");
         setCategory("");
         setISBN("");
+        setBookTitleCorrect(true);
+        setAuthorNameCorrect(true);
+        setCategoryCorrect(true);
+        setISBNCorrect(true);
     }
 
     useEffect(() => {
@@ -34,13 +49,16 @@ const BookModal = ({active, setActive, bookList, setBookList, editBook = null, s
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (bookTitle.trim() === "") {
-
+            setBookTitleCorrect(false);
         } else if (authorName.trim() === "" || !isNaN(Number(authorName))) {
-
+            if(!bookTitleCorrect) setBookTitleCorrect(true);
+            setAuthorNameCorrect(false);
         } else if (category === "") {
-
-        } else if (ISBN === "") {
-
+            if(!authorNameCorrect) setAuthorNameCorrect(true);
+            setCategoryCorrect(false);
+        } else if (ISBN === "" || ISBNs.includes(Number(ISBN))) {
+            if(!categoryCorrect) setCategoryCorrect(true);
+            setISBNCorrect(false);
         } else if (!editBook) {
             const newBook: Book = {
                 bookTitle,
@@ -70,7 +88,6 @@ const BookModal = ({active, setActive, bookList, setBookList, editBook = null, s
         }
     };
 
-
     return (
         <div className={active ? "modal active" : "modal"} onClick={() => {
             setEditBook(null);
@@ -83,6 +100,7 @@ const BookModal = ({active, setActive, bookList, setBookList, editBook = null, s
                     <div className="modal-column">
                         <label htmlFor="bookTitle">Book Title:</label>
                         <input
+                            className={bookTitleCorrect ? "" : "incorrect"}
                             type="text"
                             id="bookTitle"
                             value={bookTitle}
@@ -92,6 +110,7 @@ const BookModal = ({active, setActive, bookList, setBookList, editBook = null, s
                     <div className="modal-column">
                         <label htmlFor="authorName">Author Name:</label>
                         <input
+                            className={authorNameCorrect ? "" : "incorrect"}
                             type="text"
                             id="authorName"
                             value={authorName}
@@ -101,11 +120,12 @@ const BookModal = ({active, setActive, bookList, setBookList, editBook = null, s
                     <div className="modal-column">
                         <label htmlFor="category">Category:</label>
                         <select
+                            className={categoryCorrect ? "" : "incorrect"}
                             id="category"
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
                         >
-                            <option value="">Select Category</option>
+                            <option value="">{editBook ? editBook.category : "Select Category"}</option>
                             <option value="Fiction">Fiction</option>
                             <option value="Non-Fiction">Non-Fiction</option>
                             <option value="Mystery">Mystery</option>
@@ -114,6 +134,7 @@ const BookModal = ({active, setActive, bookList, setBookList, editBook = null, s
                     <div className="modal-column">
                         <label htmlFor="ISBN">ISBN:</label>
                         <input
+                            className={ISBNCorrect ? "" : "incorrect"}
                             type="number"
                             id="ISBN"
                             value={ISBN}
@@ -122,7 +143,11 @@ const BookModal = ({active, setActive, bookList, setBookList, editBook = null, s
                     </div>
                     <div className="modal-actions">
                         <button type="submit">Add</button>
-                        <button type="button" onClick={() => setActive(false)}>
+                        <button type="button" onClick={() => {
+                            setEditBook(null);
+                            setActive(false)
+                            clearAll();
+                        }}>
                             Cancel
                         </button>
                     </div>

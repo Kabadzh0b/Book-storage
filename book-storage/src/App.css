@@ -67,3 +67,7 @@
     border-radius: 25px;
     color: #eefa01;
 }
+
+.incorrect{
+    border-color: red !important;
+}

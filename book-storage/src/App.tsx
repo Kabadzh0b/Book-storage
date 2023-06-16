@@ -48,10 +48,9 @@ function App() {
                 setModalActive(true)
             }}>Add a book
             </button>
-            <MySelect handleSelectChange={handleSelectChange} />
+            <MySelect handleSelectChange={handleSelectChange}/>
             <BookList filteredList={filtered} setModalActive={setModalActive}
                       setEditBook={setEditBook} updateList={updateList}
-                      selectedOption={selectedOption}
             ></BookList>
             <BookModal active={modalActive} setActive={setModalActive} bookList={bookList}
                        setBookList={setBookList} editBook={editBook} setEditBook={setEditBook}

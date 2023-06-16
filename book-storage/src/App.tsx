@@ -25,7 +25,7 @@ function App() {
     const [bookList, setBookList] = useState<Book[]>([]);
     const [filtered, setFiltered] = useState<Book[]>([]);
     const [editBook, setEditBook] = useState<Book | null>(null);
-    const [selectedOption, setSelectedOption] = useState('all');
+    const [selectedOption, setSelectedOption] = useState("activated");
 
     const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = event.target.value;

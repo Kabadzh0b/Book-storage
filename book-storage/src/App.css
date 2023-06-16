@@ -48,6 +48,17 @@
     }
 }
 
+.add-book-btn{
+    cursor: pointer;
+    width: 200px;
+    height: 40px;
+    font-family: "Avignon Pro", monospace;
+    font-size: 20px;
+    background-color: rgb(110, 232, 11);
+    border-radius: 25px;
+    color: #000000;
+}
+
 .delete-btn{
     cursor: pointer;
     width: 200px;

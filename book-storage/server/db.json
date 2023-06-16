@@ -3,10 +3,18 @@
     {
       "bookTitle": "1984",
       "authorName": "George Orwell",
-      "category": "Fiction",
+      "category": "anti-utopia",
       "ISBN": 1,
       "activate": true,
       "id": 1
+    },
+    {
+      "bookTitle": "Animal Farm",
+      "authorName": "George Orwell",
+      "category": "anti-utopia",
+      "ISBN": 2,
+      "activate": true,
+      "id": 2
     }
   ]
 }

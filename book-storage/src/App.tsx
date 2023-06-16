@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import './App.css';
 import {BookList} from "./components/BookList";
 import BookModal from "./components/BookModal/BookModal";
 import {Book} from "./types/Book";
+import {MySelect} from "./components/MySelect/MySelect";
 
 
 function App() {
@@ -22,16 +23,36 @@ function App() {
 
     const [modalActive, setModalActive] = useState(false);
     const [bookList, setBookList] = useState<Book[]>([]);
+    const [filtered, setFiltered] = useState<Book[]>([]);
     const [editBook, setEditBook] = useState<Book | null>(null);
+    const [selectedOption, setSelectedOption] = useState('all');
+
+    const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
+        const selectedValue = event.target.value;
+        setSelectedOption(selectedValue);
+    }
+    useEffect(() => {
+        if (selectedOption === "activated") {
+            setFiltered(bookList.filter(book => book.activate));
+        } else if (selectedOption === "deactivated") {
+            setFiltered(bookList.filter(book => !book.activate));
+        } else {
+            setFiltered(bookList);
+        }
+    }, [bookList, selectedOption])
+
 
     return (
         <div className="App">
-            <button onClick={() => {
+            <button className="add-book-btn" onClick={() => {
                 setModalActive(true)
             }}>Add a book
             </button>
-            <BookList bookList={bookList} setModalActive={setModalActive}
-                      setEditBook={setEditBook} updateList={updateList}></BookList>
+            <MySelect handleSelectChange={handleSelectChange} />
+            <BookList filteredList={filtered} setModalActive={setModalActive}
+                      setEditBook={setEditBook} updateList={updateList}
+                      selectedOption={selectedOption}
+            ></BookList>
             <BookModal active={modalActive} setActive={setModalActive} bookList={bookList}
                        setBookList={setBookList} editBook={editBook} setEditBook={setEditBook}
                        updateList={updateList}></BookModal>

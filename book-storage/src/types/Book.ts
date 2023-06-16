@@ -5,4 +5,5 @@ export interface Book{
     ISBN:number,
     activate:boolean,
     id?:number,
+    additionalText:string,
 }

@@ -48,7 +48,7 @@
     }
 }
 
-.add-book-btn{
+.add-book-btn {
     cursor: pointer;
     width: 200px;
     height: 40px;
@@ -59,7 +59,7 @@
     color: #000000;
 }
 
-.delete-btn{
+.delete-btn {
     cursor: pointer;
     width: 200px;
     height: 40px;
@@ -70,7 +70,7 @@
     color: whitesmoke;
 }
 
-.edit-btn{
+.edit-btn {
     cursor: pointer;
     width: 100px;
     height: 40px;
@@ -81,7 +81,7 @@
     color: #eefa01;
 }
 
-.deactivate-btn{
+.deactivate-btn {
     cursor: pointer;
     width: 200px;
     height: 40px;
@@ -92,7 +92,7 @@
     color: #3f1f1f;
 }
 
-.re-activate-btn{
+.re-activate-btn {
     cursor: pointer;
     width: 200px;
     height: 40px;
@@ -103,9 +103,9 @@
     color: #ff9090;
 }
 
-.btns-container{
+.btns-container {
     display: flex;
     justify-content: center;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
 }
 

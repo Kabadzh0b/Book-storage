@@ -31,6 +31,7 @@ export const BookItem = ({book, setModalActive, setEditBook, updateList}: {
             <h5 className="book-item-author">{book.authorName}</h5>
             <p className="book-item-category">{book.category}</p>
             <p className="book-item-isbn">{book.ISBN}</p>
+            <p>{book.additionalText}</p>
             <div className="btns-container">
                 <button className="delete-btn" onClick={() => {
                     deleteBook();

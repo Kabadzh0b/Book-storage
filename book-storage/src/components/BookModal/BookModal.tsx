@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from "react";
 import "./BookModal.css";
 import {Book} from "../../types/Book";
+import moment from 'moment';
 
-
-const BookModal = ({active, setActive, bookList, setBookList, editBook = null, setEditBook, updateList}: {
+const BookModal = ({active, setActive, bookList, editBook = null, setEditBook, updateList}: {
     active: boolean,
     setActive: (status: boolean) => void,
     bookList: Book[],
-    setBookList: (bookList: Book[]) => void,
     editBook: Book | null,
     setEditBook: (book: Book | null) => void,
     updateList: () => void,
@@ -67,11 +66,9 @@ const BookModal = ({active, setActive, bookList, setBookList, editBook = null, s
                 authorName,
                 category,
                 ISBN: parseInt(ISBN),
-                activate: true
+                activate: true,
+                additionalText: "Created at: " + moment(new Date()).format('D MMMM YYYY, h:mmA'),
             };
-            const newBookList = [...bookList];
-            newBookList.push(newBook);
-            setBookList(newBookList);
             setActive(false);
             fetch('http://localhost:3001/booksStorage', {
                 method: 'POST',
@@ -80,7 +77,7 @@ const BookModal = ({active, setActive, bookList, setBookList, editBook = null, s
                 },
                 body: JSON.stringify(newBook),
             })
-                .then(()=> updateList())
+                .then(() => updateList())
                 .catch(error => {
                     console.error('Error:', error);
                 });
@@ -92,6 +89,7 @@ const BookModal = ({active, setActive, bookList, setBookList, editBook = null, s
                 ISBN: parseInt(ISBN),
                 activate: true,
                 id: editBook.id,
+                additionalText: "Edited at: " + moment(new Date()).format('D MMMM YYYY, h:mmA'),
             };
             fetch(`http://localhost:3001/booksStorage/${editBook.id}`, {
                 method: 'PUT',

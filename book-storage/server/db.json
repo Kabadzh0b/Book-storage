@@ -4,16 +4,18 @@
       "bookTitle": "1984",
       "authorName": "George Orwell",
       "category": "anti-utopia",
-      "ISBN": 1,
+      "ISBN": 9783548234106,
       "activate": true,
+      "additionalText": "Created at: 16 June 2023, 1:57PM",
       "id": 1
     },
     {
       "bookTitle": "Animal Farm",
       "authorName": "George Orwell",
       "category": "anti-utopia",
-      "ISBN": 2,
+      "ISBN": 9780451526342,
       "activate": true,
+      "additionalText": "Created at: 16 June 2023, 1:57PM",
       "id": 2
     }
   ]

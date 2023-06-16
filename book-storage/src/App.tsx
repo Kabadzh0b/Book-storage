@@ -52,8 +52,8 @@ function App() {
             <BookList filteredList={filtered} setModalActive={setModalActive}
                       setEditBook={setEditBook} updateList={updateList}
             ></BookList>
-            <BookModal active={modalActive} setActive={setModalActive} bookList={bookList}
-                       setBookList={setBookList} editBook={editBook} setEditBook={setEditBook}
+            <BookModal active={modalActive} setActive={setModalActive} bookList={bookList} editBook={editBook}
+                       setEditBook={setEditBook}
                        updateList={updateList}></BookModal>
         </div>
     );

@@ -1,0 +1,12 @@
+{
+  "booksStorage": [
+    {
+      "bookTitle": "1984",
+      "authorName": "George Orwell",
+      "category": "Fiction",
+      "ISBN": 1,
+      "activate": true,
+      "id": 1
+    }
+  ]
+}

@@ -49,6 +49,7 @@
 }
 
 .delete-btn{
+    cursor: pointer;
     width: 200px;
     height: 40px;
     font-family: "Avignon Pro", monospace;
@@ -59,6 +60,7 @@
 }
 
 .edit-btn{
+    cursor: pointer;
     width: 100px;
     height: 40px;
     font-family: "Avignon Pro", monospace;
@@ -68,6 +70,31 @@
     color: #eefa01;
 }
 
-.incorrect{
-    border-color: red !important;
+.deactivate-btn{
+    cursor: pointer;
+    width: 200px;
+    height: 40px;
+    font-family: "Avignon Pro", monospace;
+    font-size: 20px;
+    background-color: rgb(58, 243, 123);
+    border-radius: 25px;
+    color: #3f1f1f;
 }
+
+.re-activate-btn{
+    cursor: pointer;
+    width: 200px;
+    height: 40px;
+    font-family: "Avignon Pro", monospace;
+    font-size: 20px;
+    background-color: rgb(236, 252, 17);
+    border-radius: 25px;
+    color: #ff9090;
+}
+
+.btns-container{
+    display: flex;
+    justify-content: center;
+    flex-wrap:wrap;
+}
+

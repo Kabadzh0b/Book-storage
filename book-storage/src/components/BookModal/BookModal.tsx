@@ -2,13 +2,15 @@ import React, {useEffect, useState} from "react";
 import "./BookModal.css";
 import {Book} from "../../types/Book";
 
-const BookModal = ({active, setActive, bookList, setBookList, editBook = null, setEditBook}: {
+
+const BookModal = ({active, setActive, bookList, setBookList, editBook = null, setEditBook, updateList}: {
     active: boolean,
     setActive: (status: boolean) => void,
     bookList: Book[],
     setBookList: (bookList: Book[]) => void,
     editBook: Book | null,
-    setEditBook: (book: Book | null) => void
+    setEditBook: (book: Book | null) => void,
+    updateList: () => void,
 }) => {
     const [bookTitle, setBookTitle] = useState("");
     const [authorName, setAuthorName] = useState("");
@@ -51,13 +53,13 @@ const BookModal = ({active, setActive, bookList, setBookList, editBook = null, s
         if (bookTitle.trim() === "") {
             setBookTitleCorrect(false);
         } else if (authorName.trim() === "" || !isNaN(Number(authorName))) {
-            if(!bookTitleCorrect) setBookTitleCorrect(true);
+            if (!bookTitleCorrect) setBookTitleCorrect(true);
             setAuthorNameCorrect(false);
         } else if (category === "") {
-            if(!authorNameCorrect) setAuthorNameCorrect(true);
+            if (!authorNameCorrect) setAuthorNameCorrect(true);
             setCategoryCorrect(false);
         } else if (ISBN === "" || ISBNs.includes(Number(ISBN))) {
-            if(!categoryCorrect) setCategoryCorrect(true);
+            if (!categoryCorrect) setCategoryCorrect(true);
             setISBNCorrect(false);
         } else if (!editBook) {
             const newBook: Book = {
@@ -65,26 +67,48 @@ const BookModal = ({active, setActive, bookList, setBookList, editBook = null, s
                 authorName,
                 category,
                 ISBN: parseInt(ISBN),
+                activate: true
             };
             const newBookList = [...bookList];
             newBookList.push(newBook);
             setBookList(newBookList);
             setActive(false);
+            fetch('http://localhost:3001/booksStorage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newBook),
+            })
+                .then(()=> updateList())
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         } else {
             const newBook: Book = {
                 bookTitle,
                 authorName,
                 category,
                 ISBN: parseInt(ISBN),
+                activate: true,
+                id: editBook.id,
             };
-            const newBookList = [...bookList];
-            setBookList(newBookList.map((book) => {
-                if (book.ISBN === editBook.ISBN) return newBook;
-                return book;
-            }))
-            setEditBook(null);
-            clearAll();
-            setActive(false);
+            fetch(`http://localhost:3001/booksStorage/${editBook.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newBook),
+            })
+                .then(() => {
+                    updateList();
+                    setEditBook(null);
+                    clearAll();
+                    setActive(false);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
     };
 

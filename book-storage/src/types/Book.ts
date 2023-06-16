@@ -3,4 +3,6 @@ export interface Book{
     authorName:string,
     category:string,
     ISBN:number,
+    activate:boolean,
+    id?:number,
 }
